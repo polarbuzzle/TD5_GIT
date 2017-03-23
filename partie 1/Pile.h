@@ -6,7 +6,9 @@ class Pile {
 public:
 	//Constructeurs et destructeur
 	Pile();
+	Pile(int capacite);
 	~Pile();
+
 
 
 	bool empiler(T1 premier);

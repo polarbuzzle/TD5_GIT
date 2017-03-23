@@ -20,7 +20,7 @@ int main()
     //                         ou: "La pile est pleine!"
     //                         selon le succès ou non de l'ajout.
 
-	Pile<pair <string, double>> pile();
+	Pile<pair <string, double> > pile;
 
         
     cout << "Depilage des taches..." << endl;
