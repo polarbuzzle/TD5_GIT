@@ -1,4 +1,10 @@
-//MAIN PARTIE 1
+/*!
+* \file main.cpp
+* \author	Jean-Frederic Fontaine
+*			Samuel Ferront
+* \date		2017-03-23
+* \brief  Implementation du main PARTIE 1
+*/
 
 #include <iostream>
 #include <string>
@@ -37,19 +43,17 @@ int main()
     // Le programme doit afficher: "Depilage de la tache: [nom de la tâche] d'une duree de [durée]"
     //                         ou: "La pile est vide!"
     //                         selon le cas.
-	for (int i = pile.obtenirTaille(); i >= 0; i--) {
-		if (!pile.estVide()) {
-			 pair<string,double> jacques = *pile.obtenirSommet();
-			 string paul = jacques.first;
-			//cout << "Depilage de la tache " << pile.obtenirSommet().first;//<< "d'une duree de " << pile.obtenirSommet()->second << endl;
+	for (int i = pile.obtenirTaille(); i >= 0; i--)
+	{
+		if (!pile.estVide())
+		{
+			cout << "Depilage de la tache " << pile.obtenirSommet()->first << " d'une duree de " << pile.obtenirSommet()->second << endl;
 			pile.depiler();
 		}
 		else
 			cout << "La pile est vide" << endl;
 	}
     
-
-
     system("pause");
 
 	return 0;
