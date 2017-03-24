@@ -22,11 +22,12 @@ int main()
 
 	if (c == '1') {
 		cout << "Utilisation de la version LISTE" << endl;
-		genes = new ConteneurGenesListe(); 
-	} else {
-		cout << "Utilisation de la version MAP" << endl;
-		genes = new ConteneurGenesMap();
+		genes = new ConteneurGenesListe();
 	}
+	//} else {
+	//	cout << "Utilisation de la version MAP" << endl;
+	//	genes = new ConteneurGenesMap();
+	//}
 	
 	//	ouverture du fichier de donnees
 	ifstream fichier;
