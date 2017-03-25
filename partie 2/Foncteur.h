@@ -1,7 +1,7 @@
 /*!
 * \file		Foncteur.h
 * \author	Jean-Frederic Fontaine
-*			Samuel Ferront
+*			Samuel Ferron
 * \date		2017-03-23
 * \brief	Implementation des foncteurs
 */
