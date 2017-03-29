@@ -3,6 +3,7 @@
 #include "conteneurGenes.h"
 #include <list>
 #include <iterator>
+#include <algorithm>
 
 class ConteneurGenesListe : public ConteneurGenes
 {
@@ -22,5 +23,5 @@ public:
 
 	virtual unsigned int modifierNoms(const string &espece, const map<string, string> &noms);
 private:
-	list<Gene> liseGene_;
+	list<Gene> listeGene_;
 };
