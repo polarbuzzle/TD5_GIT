@@ -128,6 +128,7 @@ public:
 
 class DetruireGenes
 {
+public:
 	/*!
 	* \brief	Constructeur par default
 	*/
