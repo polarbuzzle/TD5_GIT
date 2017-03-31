@@ -201,7 +201,7 @@ unsigned int ConteneurGenesListe::modifierNoms(const string &espece, const map<s
 void ConteneurGenesListe::trierParLongueur(ostream& out)
 {
 	listeGene_.sort(TriParLongueur());
-	afficherParLongueur(out);
+	
 }
 
 /*!
@@ -214,5 +214,5 @@ void ConteneurGenesListe::trierParLongueur(ostream& out)
 void ConteneurGenesListe::trierParEspeceEtNom(ostream& out)
 {
 	listeGene_.sort(TriParEspeceNom());
-	afficherParEspeceEtNom(out);
+	
 }
