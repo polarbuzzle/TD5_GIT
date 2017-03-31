@@ -71,7 +71,7 @@ unsigned int ConteneurGenesListe::modifierNoms(const string &espece, const map<s
 {
 	Gene* gene;
 	unsigned int nombreModifies = 0;
-	for (auto it = noms.begin(); it != noms.end(); ++it)
+	for (auto it = noms.begin(); it != noms.end();)
 	{
 		auto itGene = find_if(listeGene_.begin(), listeGene_.end(), MemeNom(it->first));
 		
@@ -80,6 +80,10 @@ unsigned int ConteneurGenesListe::modifierNoms(const string &espece, const map<s
 			gene = *itGene;
 			gene->setNom(it->second);
 			nombreModifies++;
+		}
+		else
+		{
+			++it;
 		}
 	}
 	return nombreModifies;

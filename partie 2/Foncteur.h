@@ -12,6 +12,13 @@
 #include "Gene.h"
 #include <map>
 
+/*!
+* \class MemeId
+*
+* \brief Predicat comparante un Gene* avec un Id
+*
+* Foncteur binaire qui aide a identifier un gene a l'aide d'un id
+*/
 class MemeId
 {
 public:
@@ -35,6 +42,13 @@ private:
 	int id_;
 };
 
+/*!
+* \class MemeEspece
+*
+* \brief Predicat comparante un Gene* avec un espece
+*
+* Foncteur binaire qui aide a identifier un gene a l'aide d'un espece
+*/
 class MemeEspece
 {
 public:
@@ -58,6 +72,13 @@ private:
 	string espece_;
 };
 
+/*!
+* \class MemeNom
+*
+* \brief Predicat comparante un Gene* avec un nom
+*
+* Foncteur binaire qui aide a identifier un gene a l'aide d'un nom
+*/
 class MemeNom
 {
 public:
@@ -81,6 +102,13 @@ private:
 	string nom_;
 };
 
+/*!
+* \class TriParLongueur
+*
+* \brief Predicat qui tri deux genes selon leur longueur
+*
+* Foncteur binaire qui compare deux genes par leur longueur et retourne vrai si le premier est plus petit
+*/
 class TriParLongueur
 {
 public:
@@ -101,6 +129,13 @@ public:
 	};
 };
 
+/*!
+* \class TriParEspeceNom
+*
+* \brief Predicat qui tri deux genes selon leur espece et leur nom
+*
+* Foncteur binaire qui compare deux genes et retourne vrai si le premier est plus petit, soit en espece ou en nom
+*/
 class TriParEspeceNom
 {
 public:
@@ -128,6 +163,13 @@ public:
 	};
 };
 
+/*!
+* \class DetruireGenes
+*
+* \brief Foncteur qui libere l'espace memoire d'un gene
+*
+* Foncteur qui delete un pointeur de gene qu'on lui envoit
+*/
 class DetruireGenes
 {
 public:
@@ -146,6 +188,13 @@ public:
 	};
 };
 
+/*!
+* \class DetruireEspece
+*
+* \brief Predicat qui detruit un gene si il correspond a un espece donne
+*
+* Foncteur binaire compare un gene avec un espece et le detruit si ils correspondent. Retourne vrai si la destruction est faite
+*/
 class DetruireEspece
 {
 public:
@@ -171,31 +220,6 @@ public:
 
 private:
 	string espece_;
-};
-
-class ModifierNom
-{
-public:
-	/*!
-	* \brief	Constructeur par parametre
-	* \param	-map la map de nom
-	*/
-	ModifierNom(map<string, string> map)
-	{
-		map_ = map;
-	};
-
-	/*!
-	* \brief	foncteur qui detruit un espece d'un pointeur gene
-	* \param	-gene le gene que nous voulons detruire un espece
-	*/
-	void operator() (const Gene* gene)
-	{
-		
-	};
-
-private:
-	map<string, string> map_;
 };
 
 #endif // !FONCTEUR
