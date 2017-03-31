@@ -6,7 +6,8 @@
 * \brief	Implementation des foncteurs
 */
 
-#pragma once
+#ifndef _FONCTEUR_
+#define _FONCTEUR_
 
 #include "Gene.h"
 
@@ -24,7 +25,7 @@ public:
 	* \param	-gene le gene que nous voulons comparer
 	* \return	true si l'id du gene est le meme que l'attribut id_
 	*/
-	bool operator()(const Gene* &gene) const
+	bool operator()(const Gene* gene) const
 	{
 		return id_ == gene->getId();
 	};
@@ -33,14 +34,14 @@ private:
 	int id_;
 };
 
-class MemeEspace
+class MemeEspece
 {
 public:
 	/*!
 	* \brief	Constructeur par parametre
 	* \param	-espece espece de gene
 	*/
-	MemeEspace(const string espece) : espece_(espece) {};
+	MemeEspece(const string espece) : espece_(espece) {};
 
 	/*!
 	* \brief	Predicat qui compare si l'espece d'un gene est le meme que l'objet
@@ -168,3 +169,5 @@ public:
 private:
 	string espece_;
 };
+
+#endif // !FONCTEUR

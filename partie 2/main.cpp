@@ -54,6 +54,8 @@ int main()
 	cout << "----------------------------------------------------------" << endl;
 	cout << "AFFICHAGE PAR ESPECE ET NOM\n" << endl;
 	// !!!!  A FAIRE: afficher les gènes par espèce et nom dans la sortie standard
+	genes->retirer(420);
+	genes->retirer(552);
 	genes->afficherParLongueur(cout);
 
 	cout << "----------------------------------------------------------" << endl;

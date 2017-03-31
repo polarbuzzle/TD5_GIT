@@ -1,6 +1,7 @@
 #pragma once
 
 #include "conteneurGenes.h"
+#include "Foncteur.h"
 #include <list>
 #include <iterator>
 #include <algorithm>
@@ -23,5 +24,5 @@ public:
 
 	virtual unsigned int modifierNoms(const string &espece, const map<string, string> &noms);
 private:
-	list<Gene> listeGene_;
+	list<Gene*> listeGene_;
 };

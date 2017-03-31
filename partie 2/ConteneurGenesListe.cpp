@@ -1,5 +1,6 @@
 
 #include "ConteneurGenesListe.h"
+#include <functional>
 
 ConteneurGenesListe::ConteneurGenesListe()
 {
@@ -13,28 +14,43 @@ ConteneurGenesListe::~ConteneurGenesListe()
 
 void ConteneurGenesListe::inserer(unsigned int id, const string &nom, const string &desc, const string &espece, const string &contenu)
 {
-	listeGene_.push_back(Gene(id, nom, desc, espece, contenu));
+	listeGene_.push_back(new Gene(id, nom, desc, espece, contenu));
 }
 
 Gene* ConteneurGenesListe::trouver(unsigned int id) const
 {
-	/*list<Gene*>::iterator it = find_if(listeGene_.begin(), listeGene_.end(), MemeId(id));
-	return *it;*/
+//	auto it = find_if(listeGene_.begin(), listeGene_.end(), MemeId(id));
+
+//	if(it != listeGene_.end())
+//		return *it;
+	return nullptr;
 }
 
 bool ConteneurGenesListe::retirer(unsigned int id)
 {
-	return true;
+	Gene* aRetirer = trouver(id);
+	if (aRetirer != nullptr)
+	{
+		//listeGene_.remove(aRetirer);
+		//delete aRetirer;
+		return true;
+	}
+	return false;
 }
 
 unsigned int ConteneurGenesListe::retirerEspece(const string &espece)
 {
-	return 0;
+	//TEMPORAIRE
+	unsigned int init = listeGene_.size();
+	listeGene_.remove_if(MemeEspece(espece));
+	unsigned int fin = listeGene_.size();
+
+	return init - fin;
 }
 
 void ConteneurGenesListe::vider()
 {
-	listeGene_.clear();
+
 }
 
 void ConteneurGenesListe::afficherParEspeceEtNom(ostream& out) const
@@ -44,7 +60,7 @@ void ConteneurGenesListe::afficherParEspeceEtNom(ostream& out) const
 
 void ConteneurGenesListe::afficherParLongueur(ostream& out) const
 {
-	copy(listeGene_.begin(), listeGene_.end(), ostream_iterator<Gene>(cout, "\n"));
+	copy(listeGene_.begin(), listeGene_.end(), ostream_iterator<Gene*>(out, "\n"));
 }
 
 void ConteneurGenesListe::afficherEspece(const string &espece, ostream& out) const

@@ -10,7 +10,6 @@
 
 #include <iostream>
 #include <string>
-#include "Foncteur.h"
 
 using namespace std;
 
