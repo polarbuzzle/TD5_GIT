@@ -23,12 +23,10 @@ ConteneurGenesMap::ConteneurGenesMap()
 */
 ConteneurGenesMap::~ConteneurGenesMap()
 {
-	const auto end = multiMapGene_.end();
-	for (auto it = multiMapGene_.begin(); it != end; ++it)
-		delete it->second;
+	vider(); 
 }
 /*!
-* \brief Fonction permettant d'ajouter un gene dans un multimap. 
+* \brief  ConteneurGenesMap::inserer()
 *
 * Cette fonction place dans un multimap de gene les differentes information 
 * concernant un gene. Plus speficiquement, on place dans l'element first 
@@ -49,16 +47,13 @@ void ConteneurGenesMap::inserer(unsigned int id, const string &nom, const string
 }
 
 /*!
-* \brief [brief description]
+* \brief ConteneurGenesMap::trouver() 
 *
-* [detailed description]
+* Permet de trouver un un gene selon le id qui est passer en 
+* parametre. 
 *
-* \param[in] [name of input parameter] [its description]
-* \param[out] [name of output parameter] [its description]
-* \return [information about return value]
-* \sa [see also section]
-* \note [any note about the function you might have]
-* \warning [any warning if necessary]
+* \param[in]	id(int)		L'id du gene a trouver
+* \return		Gene*		Retourne un pointeur de gene 
 */
 Gene* ConteneurGenesMap::trouver(unsigned int id) const
 {
@@ -73,43 +68,38 @@ Gene* ConteneurGenesMap::trouver(unsigned int id) const
 	return nullptr;
 }
 /*!
-* \brief [brief description]
+* \brief ConteneurGenesMap::retirer() 
 *
-* [detailed description]
+* Permet de retirer un gene de la map selon 
+* l'id qui est fourni en parametre.
 *
-* \param[in] [name of input parameter] [its description]
-* \param[out] [name of output parameter] [its description]
-* \return [information about return value]
-* \sa [see also section]
-* \note [any note about the function you might have]
-* \warning [any warning if necessary]
+* \param[in]	id(unsigned int)	Id du gene a retirer 
+* \return		bool				Booleen vrai ou faut selon si le gene a 
+*									ete supprimer ou non. 
 */
 bool ConteneurGenesMap::retirer(unsigned int id) 
 {
 	const auto end = multiMapGene_.end();
 	for (auto it = multiMapGene_.begin(); it != end; it++) {
-		Gene bob = *(it->second);
-		if (bob.getId() == id)
+		if (it->second->getId() == id)
 		{
 			delete it->second;
 			multiMapGene_.erase(it);
 			return true;
-
 		}
 	}
 	return false; 
 };
 /*!
-* \brief [brief description]
+* \brief ConteneurGenesMap::retirerEspece()
 *
-* [detailed description]
+* Permet de retirer tous les genes qui font 
+* parti d'une espece donne en parametre. 
+* La fonction s'assure de "delete" les pointeurs 
+* de gene qui correspondent a cette espece. 
 *
-* \param[in] [name of input parameter] [its description]
-* \param[out] [name of output parameter] [its description]
-* \return [information about return value]
-* \sa [see also section]
-* \note [any note about the function you might have]
-* \warning [any warning if necessary]
+* \param[in]	espece(const string)	L'espece a trouver et supprimer
+* \return		int						Retourne le nombre de gene supprimer	 
 */
 unsigned int ConteneurGenesMap::retirerEspece(const string &espece)
 {
@@ -121,90 +111,116 @@ unsigned int ConteneurGenesMap::retirerEspece(const string &espece)
 			vectorGeneTrouver.push_back(it->second);
 			compteur++;
 		}
-	
 	}
 	for_each(vectorGeneTrouver.begin(), vectorGeneTrouver.end(), DetruireGenes());
 	multiMapGene_.erase(espece);
 	return compteur; 
 }
 /*!
-* \brief [brief description]
+* \brief ConteneurGenesMap::vider()
 *
-* [detailed description]
+* Permet de vider la multimap. La fonction s'assure 
+* de delete les pointeurs de genes. 
 *
-* \param[in] [name of input parameter] [its description]
-* \param[out] [name of output parameter] [its description]
-* \return [information about return value]
-* \sa [see also section]
-* \note [any note about the function you might have]
-* \warning [any warning if necessary]
+* \return AUCUN
 */
 void ConteneurGenesMap::vider()
 {
-
+	const auto end = multiMapGene_.end();
+	for (auto it = multiMapGene_.begin(); it != end; ++it)
+		delete it->second;
+	multiMapGene_.clear(); 
 }
 /*!
-* \brief [brief description]
+* \brief ConteneurGenesMap::afficherParEspeceEtNom()
 *
-* [detailed description]
+* Fonction qui permet d'afficher en ordre Alphabetique de
+* l'espece et du nom. 
 *
-* \param[in] [name of input parameter] [its description]
-* \param[out] [name of output parameter] [its description]
-* \return [information about return value]
-* \sa [see also section]
-* \note [any note about the function you might have]
-* \warning [any warning if necessary]
+* \param[in] out(ostream&)	Le flux dans lequel placer les gene trier. 
+* \return AUCUN
 */
 
 void ConteneurGenesMap::afficherParEspeceEtNom(ostream& out) const
 {
-
+	vector<Gene*> tempo; 
+	const auto end = multiMapGene_.end();
+	for (auto it = multiMapGene_.begin(); it != end; ++it) {
+		tempo.push_back(it->second);
+	}
+	sort(tempo.begin(), tempo.end(), TriParEspeceNom());
+	copy(tempo.begin(), tempo.end(), ostream_iterator<Gene*>(out, "\n"));
 }
 /*!
-* \brief [brief description]
+* \brief afficherParLongueur()
 *
-* [detailed description]
+* Fonction qui pemret d'afficher les differents genes 
+* contenu dans la multimap en ordre de longeur (definit 
+* par le foncteur)
 *
-* \param[in] [name of input parameter] [its description]
-* \param[out] [name of output parameter] [its description]
-* \return [information about return value]
-* \sa [see also section]
-* \note [any note about the function you might have]
-* \warning [any warning if necessary]
+* \param[in] out(ostream&)	Flux dans lequel placer les genes ordonner
+* \return AUCUN
 */
 void ConteneurGenesMap::afficherParLongueur(ostream& out) const
 {
+	vector<Gene*> tempo;
+	const auto end = multiMapGene_.end();
+	for (auto it = multiMapGene_.begin(); it != end; ++it) {
+		tempo.push_back(it->second);
+	}
+	sort(tempo.begin(), tempo.end(), TriParLongueur());
+	copy(tempo.begin(), tempo.end(), ostream_iterator<Gene*>(out, "\n"));
 }
 /*!
-* \brief [brief description]
+* \brief ConteneurGenesMap::afficherEspece()
 *
-* [detailed description]
+* Permet d'afficher des genes selon l'espece recu en 
+* parametre. 
 *
-* \param[in] [name of input parameter] [its description]
-* \param[out] [name of output parameter] [its description]
-* \return [information about return value]
-* \sa [see also section]
-* \note [any note about the function you might have]
-* \warning [any warning if necessary]
+* \param[in] espece(string)		L'espece de gene a afficher 
+* \param[in] out(ostream&)		Le flux dans lequel placer l'espece
+* \return AUCUN
 */
 void ConteneurGenesMap::afficherEspece(const string &espece, ostream& out) const
 {
-
+	const auto end = multiMapGene_.end();
+	for (auto it = multiMapGene_.begin(); it != end; ++it) {
+		if(it->first == espece)
+		{
+			out << it->second; 
+		}
+	}
 }
 /*!
-* \brief [brief description]
+* \brief  ConteneurGenesMap::modifierNoms()
 *
-* [detailed description]
+* Permet de modifier le nom de plusieurs genes. Cette 
+* fonctiion recoit en parametre une map dans lequel on 
+* retrouve une paire: nom a changer et nouveau nom . Ainsi, on parcour l'objet
+* puis on compare l'espece recu en parametre et l'espce de l'objet 
+* si ceux-ci sont pareil on compare les noms du map recu en parametre 
+* et le nom de l'objet. Si ceux-ci son pareil on change le nom de l'objet 
+* par le nouveau nom contenu dans le map. 
 *
-* \param[in] [name of input parameter] [its description]
-* \param[out] [name of output parameter] [its description]
-* \return [information about return value]
-* \sa [see also section]
-* \note [any note about the function you might have]
-* \warning [any warning if necessary]
+* \param[in]	espece(string)				L'espece a investiguer		
+* \param[in]	nom(map<string, string>)	Le map servant a chercher un nom afin de le remplacer
+* \return		unsigned int				Le nombre de nom modifier selon les criteres. 				
 */
 unsigned int ConteneurGenesMap::modifierNoms(const string &espece, const map<string, string> &noms)
 {
-	return 0;
+	int compteur = 0; 
+	auto endAModifier	= multiMapGene_.end(); 
+	auto endQuiModifie = noms.end(); 
+	for (auto debut1 = noms.begin(); debut1 != endQuiModifie; debut1++)
+	{
+		for (auto it = multiMapGene_.begin(); it != endAModifier; it++)
+		{
+			if ((it->first == espece) && (it->second->getNom() == debut1->first)) {
+				it->second->setNom(debut1->second);
+				compteur++;
+			}
+		}
+	}
+	return compteur;
 }
 
