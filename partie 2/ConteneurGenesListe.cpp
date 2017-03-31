@@ -9,7 +9,7 @@ ConteneurGenesListe::ConteneurGenesListe()
 
 ConteneurGenesListe::~ConteneurGenesListe()
 {
-	//rien pour l'instant
+	vider();
 }
 
 void ConteneurGenesListe::inserer(unsigned int id, const string &nom, const string &desc, const string &espece, const string &contenu)
@@ -19,10 +19,10 @@ void ConteneurGenesListe::inserer(unsigned int id, const string &nom, const stri
 
 Gene* ConteneurGenesListe::trouver(unsigned int id) const
 {
-//	auto it = find_if(listeGene_.begin(), listeGene_.end(), MemeId(id));
+	auto it = find_if(listeGene_.begin(), listeGene_.end(), MemeId(id));
 
-//	if(it != listeGene_.end())
-//		return *it;
+	if(it != listeGene_.end())
+		return *it;
 	return nullptr;
 }
 
@@ -31,8 +31,8 @@ bool ConteneurGenesListe::retirer(unsigned int id)
 	Gene* aRetirer = trouver(id);
 	if (aRetirer != nullptr)
 	{
-		//listeGene_.remove(aRetirer);
-		//delete aRetirer;
+		listeGene_.remove(aRetirer);
+		delete aRetirer;
 		return true;
 	}
 	return false;
@@ -40,22 +40,21 @@ bool ConteneurGenesListe::retirer(unsigned int id)
 
 unsigned int ConteneurGenesListe::retirerEspece(const string &espece)
 {
-	//TEMPORAIRE
-	unsigned int init = listeGene_.size();
-	listeGene_.remove_if(MemeEspece(espece));
-	unsigned int fin = listeGene_.size();
-
-	return init - fin;
+	unsigned int nbrRetire = listeGene_.size();
+	listeGene_.remove_if(DetruireEspece(espece));
+	return nbrRetire - listeGene_.size();
 }
 
 void ConteneurGenesListe::vider()
 {
+	for_each(listeGene_.begin(), listeGene_.end(), DetruireGenes());
+	listeGene_.clear();
 
 }
 
 void ConteneurGenesListe::afficherParEspeceEtNom(ostream& out) const
 {
-
+	copy(listeGene_.begin(), listeGene_.end(), ostream_iterator<Gene*>(out, "\n"));
 }
 
 void ConteneurGenesListe::afficherParLongueur(ostream& out) const
@@ -65,10 +64,35 @@ void ConteneurGenesListe::afficherParLongueur(ostream& out) const
 
 void ConteneurGenesListe::afficherEspece(const string &espece, ostream& out) const
 {
-
+	copy_if(listeGene_.begin(), listeGene_.end(), ostream_iterator<Gene*>(out, "\n"), MemeEspece(espece));
 }
 
 unsigned int ConteneurGenesListe::modifierNoms(const string &espece, const map<string, string> &noms)
 {
-	return 0;
+	Gene* gene;
+	unsigned int nombreModifies = 0;
+	for (auto it = noms.begin(); it != noms.end(); ++it)
+	{
+		auto itGene = find_if(listeGene_.begin(), listeGene_.end(), MemeNom(it->first));
+		
+		if (itGene != listeGene_.end())
+		{
+			gene = *itGene;
+			gene->setNom(it->second);
+			nombreModifies++;
+		}
+	}
+	return nombreModifies;
+}
+
+void ConteneurGenesListe::trierParLongueur(ostream& out)
+{
+	listeGene_.sort(TriParLongueur());
+	afficherParLongueur(out);
+}
+
+void ConteneurGenesListe::trierParEspeceEtNom(ostream& out)
+{
+	listeGene_.sort(TriParEspeceNom());
+	afficherParEspeceEtNom(out);
 }

@@ -54,10 +54,6 @@ int main()
 	cout << "----------------------------------------------------------" << endl;
 	cout << "AFFICHAGE PAR ESPECE ET NOM\n" << endl;
 	// !!!!  A FAIRE: afficher les gènes par espèce et nom dans la sortie standard
-	genes->retirer(420);
-	genes->retirer(552);
-	genes->afficherParLongueur(cout);
-
 	cout << "----------------------------------------------------------" << endl;
 	cout << "RECHERCHE DU GENE 25107" << endl;
 	// !!!! A FAIRE: rechercher et afficher le gène ayant l'ID 25107
@@ -79,6 +75,7 @@ int main()
 
 	cout << "----------------------------------------------------------" << endl;
 	cout << "RETRAIT DU GENE 552" << endl;
+
 	// !!!! A FAIRE: retirer le gène 552
 	// Le programme doit afficher "Le gène a été retiré" si le retrait réussit, 
 	// ou bien "Le gène 552 n'a pas été trouvé" si le retrait échoue
@@ -95,8 +92,13 @@ int main()
 
 	cout << "----------------------------------------------------------" << endl;
 	cout << "AFFICHAGE PAR LONGEUR\n" << endl;
+	map<string, string> m;
+	m.insert(make_pair("Avpr1a", "XXXXX"));
+	m.insert(make_pair("Fmr1", "YYYYY"));
+	m.insert(make_pair("Uwta1", "ZZZZZ"));
+	//{ "Avpr1a", "XXXXX", "Fmr1", "YYYYY", "Uwta1", "ZZZZZ" };
+	cout << genes->modifierNoms("Mus musculus", m);
 	// !!!! A FAIRE: afficher les gènes par longueur
-	
 
 	// !!!! A FAIRE: N'OUBLIEZ PAS DE RÉPONDRE AUX QUESTIONS DANS UN FICHIER TEXTE !!!!
 

@@ -10,6 +10,7 @@
 #define _FONCTEUR_
 
 #include "Gene.h"
+#include <map>
 
 class MemeId
 {
@@ -158,16 +159,43 @@ public:
 	* \brief	foncteur qui detruit un espece d'un pointeur gene
 	* \param	-gene le gene que nous voulons detruire un espece
 	*/
-	void operator()(Gene* gene)
+	bool operator()(Gene* gene)
 	{
 		if (gene->getEspece() == espece_)
 		{
 			delete gene;
+			return true;
 		}
+		return false;
 	};
 
 private:
 	string espece_;
+};
+
+class ModifierNom
+{
+public:
+	/*!
+	* \brief	Constructeur par parametre
+	* \param	-map la map de nom
+	*/
+	ModifierNom(map<string, string> map)
+	{
+		map_ = map;
+	};
+
+	/*!
+	* \brief	foncteur qui detruit un espece d'un pointeur gene
+	* \param	-gene le gene que nous voulons detruire un espece
+	*/
+	void operator() (const Gene* gene)
+	{
+		
+	};
+
+private:
+	map<string, string> map_;
 };
 
 #endif // !FONCTEUR
