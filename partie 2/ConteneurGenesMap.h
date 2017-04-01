@@ -40,8 +40,8 @@ public:
 	virtual void afficherParLongueur(ostream& out) const;
 	virtual void afficherEspece(const string &espece, ostream& out) const;
 	virtual unsigned int modifierNoms(const string &espece, const map<string, string> &noms);
-	virtual void trierParLongueur(ostream& out) {};
-	virtual void trierParEspeceEtNom(ostream& out) {};
+	virtual void trierParLongueur() {};
+	virtual void trierParEspeceEtNom() {};
 private:
 	multimap<string, Gene* > multiMapGene_;
 

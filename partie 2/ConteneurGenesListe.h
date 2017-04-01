@@ -28,8 +28,8 @@ public:
 	virtual unsigned int retirerEspece(const string &espece);
 	virtual void vider();
 
-	virtual void trierParLongueur(ostream& out);
-	virtual void trierParEspeceEtNom(ostream& out);
+	virtual void trierParLongueur();
+	virtual void trierParEspeceEtNom();
 
 	virtual void afficherParEspeceEtNom(ostream& out) const;
 	virtual void afficherParLongueur(ostream& out) const;
