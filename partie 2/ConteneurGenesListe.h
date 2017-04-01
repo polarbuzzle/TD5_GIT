@@ -1,4 +1,13 @@
-#pragma once
+/*!
+* \file		ConteneurGenesListe.h
+* \author	Jean-Frederic Fontaine
+*			Samuel Ferron
+* \date		2017-03-23
+* \brief	Definition de la classe ConteneurGeneListe
+*/
+
+#ifndef _CONENEUR_GENES_LISTE_
+#define _CONENEUR_GENES_LISTE_
 
 #include "conteneurGenes.h"
 #include "Foncteur.h"
@@ -14,6 +23,7 @@ public:
 
 	virtual void inserer(unsigned int id, const string &nom, const string &desc, const string &espece, const string &contenu);
 	virtual Gene* trouver(unsigned int id) const;
+
 	virtual bool retirer(unsigned int id);
 	virtual unsigned int retirerEspece(const string &espece);
 	virtual void vider();
@@ -29,3 +39,5 @@ public:
 private:
 	list<Gene*> listeGene_;
 };
+
+#endif // !_CONENEUR_GENES_LISTE_
