@@ -100,6 +100,12 @@ Calculatrice::Calculatrice(QWidget *parent): QWidget(parent)
         setWindowTitle(tr("Calculatrice"));
 }
 
+/*********************************************
+*SLOT:			digitClicked
+*Descriptions:	ajoute au display le chiffre associe au bouon appuye
+*Parametre:		aucun
+*Retour:		aucun
+*********************************************/
 void Calculatrice::digitClicked()
 {
     Bouton *clickedButton = qobject_cast<Bouton* >(sender());
@@ -117,6 +123,13 @@ void Calculatrice::digitClicked()
 
 }
 
+/*********************************************
+*SLOT:			unaryOperatorClicked
+*Descriptions:	Effectue les operations qui necessitent seulement qu'un operande, soit sqrt, reciproque, power 2, etc
+				Si l;operation est impossible, un message d'erreur approprie es affiche a l'utilisateur
+*Parametre:		aucun
+*Retour:		aucun
+*********************************************/
 void Calculatrice::unaryOperatorClicked()
 {
     Bouton* clickedButton = qobject_cast<Bouton*>(sender());
@@ -166,6 +179,12 @@ void Calculatrice::unaryOperatorClicked()
     waitingForOperand = true;
 }
 
+/*********************************************
+*SLOT:			additiveOperatorClicked
+*Descriptions:	Sauvegarde le nombre du display dans l'operande de gauche et attend la prochaine operande pour les additionner
+*Parametre:		aucun
+*Retour:		aucun
+*********************************************/
 void Calculatrice::additiveOperatorClicked()
 {
     Bouton* clickedButton = qobject_cast<Bouton*>(sender());
@@ -179,6 +198,12 @@ void Calculatrice::additiveOperatorClicked()
     waitingForOperand = true;
 }
 
+/*********************************************
+*SLOT:			multiplicativeOperatorClicked
+*Descriptions:	Sauvegarde le nombre du display dans l'operande de gauche et attend la prochaine operande pour les multiplier
+*Parametre:		aucun
+*Retour:		aucun
+*********************************************/
 void Calculatrice:: multiplicativeOperatorClicked()
 {
     Bouton* clickedButton = qobject_cast<Bouton*>(sender());
@@ -192,6 +217,12 @@ void Calculatrice:: multiplicativeOperatorClicked()
     waitingForOperand = true;
 }
 
+/*********************************************
+*SLOT:			equalClicked
+*Descriptions:	Effectue et affiche le resultat de l'operation entre deux nombres
+*Parametre:		aucun
+*Retour:		aucun
+*********************************************/
 void Calculatrice::equalClicked()
 {
     double operand = display->text().toDouble();
@@ -226,6 +257,12 @@ void Calculatrice::equalClicked()
     waitingForOperand = true;
 }
 
+/*********************************************
+*SLOT:			pointClicked
+*Descriptions:	Ajoute un point au nombre affiche dans le display si il n'en contient pas
+*Parametre:		aucun
+*Retour:		aucun
+*********************************************/
 void Calculatrice::pointClicked()
 {
     if(waitingForOperand)
@@ -239,6 +276,12 @@ void Calculatrice::pointClicked()
     waitingForOperand = false;
 }
 
+/*********************************************
+*SLOT:			changeSignClicked
+*Descriptions:	Inverse le signe du nombre actuellement dans le display, si le nombre est nul, un message d'erreur est affiche
+*Parametre:		aucun
+*Retour:		aucun
+*********************************************/
 void Calculatrice::changeSignClicked()
 {
     QString text = display->text();
@@ -255,6 +298,12 @@ void Calculatrice::changeSignClicked()
     display->setText(text);
 }
 
+/*********************************************
+*SLOT:			backspaceClicked
+*Descriptions:	Efface le numero le plus a droite du nombre actuellement dans le display
+*Parametre:		aucun
+*Retour:		aucun
+*********************************************/
 void Calculatrice::backspaceClicked()
 {
     if(waitingForOperand)
@@ -270,6 +319,12 @@ void Calculatrice::backspaceClicked()
     display->setText(text);
 }
 
+/*********************************************
+*SLOT:			clear
+*Descriptions:	Remplace l'element dans le display par l'element nul
+*Parametre:		aucun
+*Retour:		aucun
+*********************************************/
 void Calculatrice::clear()
 {
     if(waitingForOperand)
@@ -279,11 +334,12 @@ void Calculatrice::clear()
     waitingForOperand = true;
 }
 
-/********************************************************************************
- * Description      : Réinitialise toutes les valeurs et toutes les opérations
- * Paramètres       : Aucun
- * Type de retour   : void
- *******************************************************************************/ 
+/*********************************************
+*methode:		clearAll
+*Descriptions:	Reinitialise toutes les memoires et display
+*Parametre:		aucun
+*Retour:		aucun
+*********************************************/
 void Calculatrice::clearAll()
 {
     sumSoFar = 0.0;
@@ -295,29 +351,60 @@ void Calculatrice::clearAll()
 
 }
 
+/*********************************************
+*SLOT:			clearMemory
+*Descriptions:	Remplace l'element en memoire par l'element nul
+*Parametre:		aucun
+*Retour:		aucun
+*********************************************/
 void Calculatrice::clearMemory()
 {
     sumInMemory = 0.0;
 }
 
+/*********************************************
+*SLOT:			readMemory
+*Descriptions:	Affecte l'element dans la memoire au display et attend une operation
+*Parametre:		aucun
+*Retour:		aucun
+*********************************************/
 void Calculatrice::readMemory()
 {
     display->setText(QString::number(sumInMemory));
     waitingForOperand = true;
 }
 
+/*********************************************
+*SLOT:			setMemory
+*Descriptions:	remplace l'element en memoire par le nombre actuellement dans le display
+*Parametre:		aucun
+*Retour:		aucun
+*********************************************/
 void Calculatrice::setMemory()
 {
     equalClicked();
     sumInMemory = display->text().toDouble();
 }
 
+/*********************************************
+*SLOT:			addToMemory
+*Descriptions:	ajoute le nombre dans le display a l'element deja en memoire
+*Parametre:		aucun
+*Retour:		aucun
+*********************************************/
 void Calculatrice::addToMemory()
 {
     equalClicked();
     sumInMemory += display->text().toDouble();
 }
 
+/*********************************************
+*methode:		createButton
+*Descriptions:	Cree un nouveau bouton qui possede un texte et un SLOT associe
+*Parametre:		-(QString)text	: le texte associe et affiche par ce bouton
+				-(char)*member	: Le SLOT qui est active lorsqu'on appuit sur ce bouton
+*Retour:		-(Bouton)		: Le bouton aisi cree
+*********************************************/
 Bouton *Calculatrice::createButton(const QString &text, const char *member)
 {
     Bouton *button = new Bouton(text);
@@ -325,6 +412,12 @@ Bouton *Calculatrice::createButton(const QString &text, const char *member)
     return button;
 }
 
+/*********************************************
+*methode:		abortOperation
+*Descriptions:	annule une operation si une exception est levee et appelle la fonction clearAll()
+*Parametre:		aucun
+*Retour:		aucun
+*********************************************/
 void Calculatrice::abortOperation()
 {
     clearAll();
@@ -332,7 +425,7 @@ void Calculatrice::abortOperation()
 }
 
 /*********************************************
-*Fonctions:		calculate
+*methode:		calculate
 *Descriptions:	calcule les opérations +, -, /, etc
 *Parametre:		-(double)rightOperand		: L'operande de droite dans l'equation
 				-(QString)pendingOperator	: Un string qui correspond a l'operation effectuee
